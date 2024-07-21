@@ -1,0 +1,11 @@
+[package]
+name = "powershell"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/powershell.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+zed_extension_api = "0.0.6"

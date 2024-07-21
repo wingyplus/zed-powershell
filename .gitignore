@@ -1,0 +1,9 @@
+# Zed generated files.
+/grammars
+/extension.wasm
+
+# Rust generated files
+/target
+
+# Test extension.
+/*.ps1
