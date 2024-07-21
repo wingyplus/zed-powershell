@@ -9,3 +9,7 @@ repository = "https://github.com/zed-industries/zed"
 [grammars.powershell]
 repository = "https://github.com/airbus-cert/tree-sitter-powershell"
 commit = "804d86fd4ad286bd0cc1c1f0f7b28bd7af6755ad"
+
+[language_servers.powershell-es]
+name = "PowerShell Editor Services"
+languages = ["PowerShell"]
