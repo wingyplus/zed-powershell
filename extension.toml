@@ -1,6 +1,6 @@
 id = "powershell"
 name = "PowerShell"
-version = "0.0.1"
+version = "0.1.0"
 schema_version = 1
 authors = ["Thanabodee Charoenpiriyakij <wingyminus@gmail.com>"]
 description = "PowerShell support"
