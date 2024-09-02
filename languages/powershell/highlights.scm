@@ -1,35 +1,49 @@
-"param" @keyword
-"dynamicparam" @keyword
-"begin" @keyword
-"process" @keyword
-"end" @keyword
-"if" @keyword
-"elseif" @keyword
-"else" @keyword
-"switch" @keyword
-"foreach" @keyword
-"for" @keyword
-"while" @keyword
-"do" @keyword
-"until" @keyword
-"function" @keyword
-"filter" @keyword
-"workflow" @keyword
-"break" @keyword
-"continue" @keyword
-"throw" @keyword
-"return" @keyword
-"exit" @keyword
-"trap" @keyword
-"try" @keyword
-"catch" @keyword
-"finally" @keyword
-"data" @keyword
-"inlinescript" @keyword
-"parallel" @keyword
-"sequence" @keyword
-"class" @keyword
-"enum" @keyword
+[
+  "begin"
+  "break"
+  "catch"
+  "class"
+  "clean"
+  "continue"
+  "data"
+  "define"
+  "do"
+  "dynamicparam"
+  "else"
+  "elseif"
+  "end"
+  "enum"
+  "exit"
+  "filter"
+  "finally"
+  "for"
+  "foreach"
+  "from"
+  "function"
+  "hidden"
+  "if"
+  "in"
+  "param"
+  "process"
+  "return"
+  "static"
+  "switch"
+  "throw"
+  "trap"
+  "try"
+  "until"
+  "using"
+  "var"
+  "while"
+] @keyword
+
+; Powershell Workflows
+[
+  "inlinescript",
+  "parallel",
+  "sequence",
+  "workflow"
+] @keyword
 
 "-as" @operator
 "-ccontains" @operator
@@ -97,7 +111,10 @@
 "-not" @operator
 
 
-";" @delimiter
+[
+  ","
+  ";"
+] @punctuation.delimiter
 
 
 (string_literal) @string
