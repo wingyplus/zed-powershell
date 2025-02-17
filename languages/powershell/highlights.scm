@@ -1,12 +1,13 @@
+; Keywords
 [
   "begin"
   "break"
   "catch"
   "class"
-  "clean"
+  ; "clean"
   "continue"
   "data"
-  "define"
+  ; "define"
   "do"
   "dynamicparam"
   "else"
@@ -18,7 +19,7 @@
   "finally"
   "for"
   "foreach"
-  "from"
+  ; "from"
   "function"
   "hidden"
   "if"
@@ -32,16 +33,16 @@
   "trap"
   "try"
   "until"
-  "using"
-  "var"
+  ; "using"
+  ; "var"
   "while"
 ] @keyword
 
 ; Powershell Workflows
 [
-  "inlinescript",
-  "parallel",
-  "sequence",
+  "inlinescript"
+  "parallel"
+  "sequence"
   "workflow"
 ] @keyword
 
