@@ -1,6 +1,6 @@
 name = "PowerShell"
 grammar = "powershell"
-path_suffixes = ["ps1"]
+path_suffixes = ["ps1", "psm1"]
 line_comments = ["# "]
 # autoclose_before = ";:.,=}])>"
 brackets = [
