@@ -1,12 +1,13 @@
+; Keywords
 [
   "begin"
   "break"
   "catch"
   "class"
-  "clean"
+  ; "clean"
   "continue"
   "data"
-  "define"
+  ; "define"
   "do"
   "dynamicparam"
   "else"
@@ -18,7 +19,7 @@
   "finally"
   "for"
   "foreach"
-  "from"
+  ; "from"
   "function"
   "hidden"
   "if"
@@ -32,84 +33,86 @@
   "trap"
   "try"
   "until"
-  "using"
-  "var"
+  ; "using"
+  ; "var"
   "while"
 ] @keyword
 
 ; Powershell Workflows
 [
-  "inlinescript",
-  "parallel",
-  "sequence",
+  "inlinescript"
+  "parallel"
+  "sequence"
   "workflow"
 ] @keyword
 
-"-as" @operator
-"-ccontains" @operator
-"-ceq" @operator
-"-cge" @operator
-"-cgt" @operator
-"-cle" @operator
-"-clike" @operator
-"-clt" @operator
-"-cmatch" @operator
-"-cne" @operator
-"-cnotcontains" @operator
-"-cnotlike" @operator
-"-cnotmatch" @operator
-"-contains" @operator
-"-creplace" @operator
-"-csplit" @operator
-"-eq" @operator
-"-ge" @operator
-"-gt" @operator
-"-icontains" @operator
-"-ieq" @operator
-"-ige" @operator
-"-igt" @operator
-"-ile" @operator
-"-ilike" @operator
-"-ilt" @operator
-"-imatch" @operator
-"-in" @operator
-"-ine" @operator
-"-inotcontains" @operator
-"-inotlike" @operator
-"-inotmatch" @operator
-"-ireplace" @operator
-"-is" @operator
-"-isnot" @operator
-"-isplit" @operator
-"-join" @operator
-"-le" @operator
-"-like" @operator
-"-lt" @operator
-"-match" @operator
-"-ne" @operator
-"-notcontains" @operator
-"-notin" @operator
-"-notlike" @operator
-"-notmatch" @operator
-"-replace" @operator
-"-shl" @operator
-"-shr" @operator
-"-split" @operator
-"-and" @operator
-"-or" @operator
-"-xor" @operator
-"-band" @operator
-"-bor" @operator
-"-bxor" @operator
-"+" @operator
-"-" @operator
-"/" @operator
-"\\" @operator
-"%" @operator
-"*" @operator
-".." @operator
-"-not" @operator
 
+[
+  "-as"
+  "-ccontains"
+  "-ceq"
+  "-cge"
+  "-cgt"
+  "-cle"
+  "-clike"
+  "-clt"
+  "-cmatch"
+  "-cne"
+  "-cnotcontains"
+  "-cnotlike"
+  "-cnotmatch"
+  "-contains"
+  "-creplace"
+  "-csplit"
+  "-eq"
+  "-ge"
+  "-gt"
+  "-icontains"
+  "-ieq"
+  "-ige"
+  "-igt"
+  "-ile"
+  "-ilike"
+  "-ilt"
+  "-imatch"
+  "-in"
+  "-ine"
+  "-inotcontains"
+  "-inotlike"
+  "-inotmatch"
+  "-ireplace"
+  "-is"
+  "-isnot"
+  "-isplit"
+  "-join"
+  "-le"
+  "-like"
+  "-lt"
+  "-match"
+  "-ne"
+  "-notcontains"
+  "-notin"
+  "-notlike"
+  "-notmatch"
+  "-replace"
+  "-shl"
+  "-shr"
+  "-split"
+  "-and"
+  "-or"
+  "-xor"
+  "-band"
+  "-bor"
+  "-bxor"
+  "+"
+  "-"
+  "/"
+  "\\"
+  "%"
+  "*"
+  ".."
+  "-not"
+] @operator
 
 [
   ","
