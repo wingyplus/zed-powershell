@@ -29,7 +29,21 @@ impl zed::Extension for PowerShellExtension {
             .language_server_path(language_server_id)
             .map_err(|err| format!("failed to get editor services: {}", err))?;
 
-        let command = format!("Import-Module (Join-Path '{bundle_path}' 'PowerShellEditorServices/PowerShellEditorServices.psd1'); Start-EditorServices -Stdio -SessionDetailsPath '{bundle_path}/powershell-es.session.json' -LogPath '{bundle_path}/logs' -FeatureFlags @() -AdditionalModules @() -HostName zed -HostProfileId 0 -HostVersion 1.0.0 -LogLevel Diagnostic");
+        let command = format!(
+            "Import-Module ( \
+                Join-Path '{bundle_path}' 'PowerShellEditorServices/PowerShellEditorServices.psd1' \
+            ); \
+            Start-EditorServices \
+                -Stdio \
+                -SessionDetailsPath '{bundle_path}/powershell-es.session.json' \
+                -LogPath '{bundle_path}/logs' \
+                -FeatureFlags @() \
+                -AdditionalModules @() \
+                -HostName zed \
+                -HostProfileId 0 \
+                -HostVersion 1.0.0 \
+                -LogLevel Trace"
+        );
 
         Ok(zed::Command {
             command: pwsh_bin,
