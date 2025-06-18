@@ -8,7 +8,7 @@ repository = "https://github.com/wingyplus/zed-powershell"
 
 [grammars.powershell]
 repository = "https://github.com/airbus-cert/tree-sitter-powershell"
-commit = "b3fe65637fca35e426dc8c889d86c8724aaa73d5" # v0.24.4
+commit = "01b67e81917482fb714409a40a8fea8fe21c42f6" # v0.25.0
 
 [language_servers.powershell-es]
 name = "PowerShell Editor Services"
