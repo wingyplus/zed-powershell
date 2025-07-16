@@ -23,7 +23,7 @@ impl zed::Extension for PowerShellExtension {
         language_server_id: &zed_extension_api::LanguageServerId,
         worktree: &zed_extension_api::Worktree,
     ) -> zed_extension_api::Result<zed_extension_api::Command> {
-        let pwsh_bin = PowerShellExtension::powershell_binary_path(self, worktree).unwrap();
+        let pwsh_bin = PowerShellExtension::powershell_binary_path(self, worktree)?;
 
         let bundle_path = self
             .language_server_path(language_server_id)
