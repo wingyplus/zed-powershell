@@ -1,5 +1,5 @@
 use std::fs;
-use std::path;
+use std::path::{self, Path};
 use zed_extension_api::{self as zed, Result};
 
 struct PowerShellExtension {
@@ -30,19 +30,29 @@ impl zed::Extension for PowerShellExtension {
             .map_err(|err| format!("failed to get editor services: {}", err))?;
 
         let command = format!(
-            "Import-Module ( \
-                Join-Path '{bundle_path}' 'PowerShellEditorServices/PowerShellEditorServices.psd1' \
-            ); \
-            Start-EditorServices \
-                -Stdio \
-                -SessionDetailsPath '{bundle_path}/powershell-es.session.json' \
-                -LogPath '{bundle_path}/logs' \
-                -FeatureFlags @() \
-                -AdditionalModules @() \
-                -HostName zed \
-                -HostProfileId 0 \
-                -HostVersion 1.0.0 \
-                -LogLevel Trace"
+            r#"
+                $Module = Join-Path "{0}" "PowerShellEditorServices" "PowerShellEditorServices.psd1"
+                $SessionDetails = Join-Path "{0}" "powershell-es.session.json"
+                $Log = Join-Path "{0}" "logs"
+
+                Import-Module $Module
+
+                Start-EditorServices `
+                    -Stdio `
+                    -SessionDetailsPath $SessionDetails `
+                    -LogPath $Log `
+                    -FeatureFlags @() `
+                    -AdditionalModules @() `
+                    -HostName "zed" `
+                    -HostProfileId 0 `
+                    -HostVersion "1.0.0" `
+                    -LogLevel "Trace"
+            "#,
+            Path::new(&bundle_path)
+                .to_str()
+                .ok_or("invalid unicode in bundle_path")?
+                .strip_prefix('/')
+                .unwrap_or_else(|| bundle_path.as_str())
         );
 
         Ok(zed::Command {
