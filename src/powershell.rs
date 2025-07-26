@@ -1,5 +1,5 @@
 use std::fs;
-use std::path::{self};
+use std::path;
 use zed_extension_api::{self as zed, Result};
 
 fn normalize_bundle_path(path: String) -> String {
