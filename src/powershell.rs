@@ -2,6 +2,18 @@ use std::fs;
 use std::path;
 use zed_extension_api::{self as zed, Result};
 
+fn normalize_bundle_path(path: String) -> String {
+    if let Some(stripped_path) = path.strip_prefix('/') {
+        if stripped_path.len() > 2
+            && stripped_path.as_bytes()[0].is_ascii_alphabetic()
+            && stripped_path.as_bytes()[1] == b':'
+        {
+            return stripped_path.to_string();
+        }
+    }
+    path
+}
+
 struct PowerShellExtension {
     /// The PowerShell binary, default to `pwsh`.
     // TODO: allow to configure via Zed settings.
@@ -28,21 +40,27 @@ impl zed::Extension for PowerShellExtension {
         let bundle_path = self
             .language_server_path(language_server_id)
             .map_err(|err| format!("failed to get editor services: {}", err))?;
+        let bundle_path = normalize_bundle_path(bundle_path);
 
         let command = format!(
-            "Import-Module ( \
-                Join-Path '{bundle_path}' 'PowerShellEditorServices/PowerShellEditorServices.psd1' \
-            ); \
-            Start-EditorServices \
-                -Stdio \
-                -SessionDetailsPath '{bundle_path}/powershell-es.session.json' \
-                -LogPath '{bundle_path}/logs' \
-                -FeatureFlags @() \
-                -AdditionalModules @() \
-                -HostName zed \
-                -HostProfileId 0 \
-                -HostVersion 1.0.0 \
-                -LogLevel Trace"
+            r#"
+                $Module = Join-Path "{bundle_path}" "PowerShellEditorServices" "PowerShellEditorServices.psd1"
+                $SessionDetails = Join-Path "{bundle_path}" "powershell-es.session.json"
+                $Log = Join-Path "{bundle_path}" "logs"
+
+                Import-Module $Module
+
+                Start-EditorServices `
+                    -Stdio `
+                    -SessionDetailsPath $SessionDetails `
+                    -LogPath $Log `
+                    -FeatureFlags @() `
+                    -AdditionalModules @() `
+                    -HostName "zed" `
+                    -HostProfileId 0 `
+                    -HostVersion "1.0.0" `
+                    -LogLevel "Trace"
+            "#,
         );
 
         Ok(zed::Command {
