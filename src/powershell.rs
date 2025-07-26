@@ -1,6 +1,18 @@
 use std::fs;
-use std::path::{self, Path};
+use std::path::{self};
 use zed_extension_api::{self as zed, Result};
+
+fn normalize_bundle_path(path: String) -> String {
+    if let Some(stripped_path) = path.strip_prefix('/') {
+        if stripped_path.len() > 2
+            && stripped_path.as_bytes()[0].is_ascii_alphabetic()
+            && stripped_path.as_bytes()[1] == b':'
+        {
+            return stripped_path.to_string();
+        }
+    }
+    path
+}
 
 struct PowerShellExtension {
     /// The PowerShell binary, default to `pwsh`.
@@ -28,12 +40,13 @@ impl zed::Extension for PowerShellExtension {
         let bundle_path = self
             .language_server_path(language_server_id)
             .map_err(|err| format!("failed to get editor services: {}", err))?;
+        let bundle_path = normalize_bundle_path(bundle_path);
 
         let command = format!(
             r#"
-                $Module = Join-Path "{0}" "PowerShellEditorServices" "PowerShellEditorServices.psd1"
-                $SessionDetails = Join-Path "{0}" "powershell-es.session.json"
-                $Log = Join-Path "{0}" "logs"
+                $Module = Join-Path "{bundle_path}" "PowerShellEditorServices" "PowerShellEditorServices.psd1"
+                $SessionDetails = Join-Path "{bundle_path}" "powershell-es.session.json"
+                $Log = Join-Path "{bundle_path}" "logs"
 
                 Import-Module $Module
 
@@ -48,11 +61,6 @@ impl zed::Extension for PowerShellExtension {
                     -HostVersion "1.0.0" `
                     -LogLevel "Trace"
             "#,
-            Path::new(&bundle_path)
-                .to_str()
-                .ok_or("invalid unicode in bundle_path")?
-                .strip_prefix('/')
-                .unwrap_or_else(|| bundle_path.as_str())
         );
 
         Ok(zed::Command {
