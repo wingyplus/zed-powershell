@@ -61,13 +61,13 @@ impl zed::Extension for PowerShellExtension {
 impl PowerShellExtension {
     fn powershell_binary_path(&mut self, worktree: &zed::Worktree) -> Result<String> {
         let pwsh_path = match &self.powershell_bin {
-            Some(path) if fs::metadata(path).map_or(false, |stat| stat.is_file()) => path.clone(),
+            Some(path) if fs::metadata(path).is_ok_and(|stat| stat.is_file()) => path.clone(),
             Some(path) => worktree
                 .which(path.clone().as_str())
-                .ok_or_else(|| "PowerShell must be installed for PowerShell Extension")?,
+                .ok_or("PowerShell must be installed for PowerShell Extension")?,
             None => worktree
                 .which("pwsh")
-                .ok_or_else(|| "PowerShell must be installed for PowerShell Extension")?,
+                .ok_or("PowerShell must be installed for PowerShell Extension")?,
         };
         self.powershell_bin = Some(pwsh_path.clone());
         Ok(pwsh_path)
@@ -94,15 +94,15 @@ impl PowerShellExtension {
             .assets
             .iter()
             .find(|asset| asset.name == "PowerShellEditorServices.zip")
-            .ok_or_else(|| format!("no PowerShellEditorServices.zip found"))?;
+            .ok_or_else(|| "no PowerShellEditorServices.zip found".to_string())?;
 
         let version_dir = format!("powershell-es-{}", release.version);
         let lsp_path = format!("{version_dir}/PowerShellEditorServices/Start-EditorServices.ps1");
 
-        if !fs::metadata(&lsp_path).map_or(false, |stat| stat.is_file()) {
+        if !fs::metadata(&lsp_path).is_ok_and(|stat| stat.is_file()) {
             // Download the asset
             zed::set_language_server_installation_status(
-                &language_server_id,
+                language_server_id,
                 &zed::LanguageServerInstallationStatus::Downloading,
             );
             zed::download_file(
