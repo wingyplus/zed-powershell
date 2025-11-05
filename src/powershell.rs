@@ -125,7 +125,8 @@ impl PowerShellExtension {
 
         let abs_path =
             path::absolute(&version_dir).map_err(|e| format!("failed to get absolute path {e}"))?;
-        Ok(abs_path.display().to_string())
+        // Convert backslashes to forward slashes for PowerShell compatibility on Windows
+        Ok(abs_path.display().to_string().replace('\\', "/"))
     }
 }
 
