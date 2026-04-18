@@ -1,6 +1,7 @@
 use std::fs;
 use std::path;
 use zed_extension_api::{self as zed, Result};
+use zed_extension_api::settings::LspSettings;
 
 struct PowerShellExtension {
     /// The PowerShell binary, default to `pwsh`.
@@ -16,6 +17,24 @@ impl zed::Extension for PowerShellExtension {
         Self {
             powershell_bin: None,
         }
+    }
+
+    fn language_server_initialization_options(
+        &mut self,
+        server_id: &zed_extension_api::LanguageServerId,
+        worktree: &zed_extension_api::Worktree,
+    ) -> Result<Option<zed::serde_json::Value>> {
+        let settings = LspSettings::for_worktree(server_id.as_ref(), worktree)?;
+        Ok(settings.initialization_options)
+    }
+
+    fn language_server_workspace_configuration(
+        &mut self,
+        server_id: &zed_extension_api::LanguageServerId,
+        worktree: &zed_extension_api::Worktree,
+    ) -> Result<Option<zed::serde_json::Value>> {
+        let settings = LspSettings::for_worktree(server_id.as_ref(), worktree)?;
+        Ok(settings.settings)
     }
 
     fn language_server_command(
@@ -127,6 +146,7 @@ impl PowerShellExtension {
             path::absolute(&version_dir).map_err(|e| format!("failed to get absolute path {e}"))?;
         Ok(abs_path.display().to_string())
     }
+
 }
 
 zed::register_extension!(PowerShellExtension);
